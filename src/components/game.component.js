@@ -3,7 +3,6 @@ import React from 'react';
 import Board from './board.component'
 import MoveBoard from './move-board.component'
 import Settings from './settings.component'
-import { calculateWinner } from '../utilities'
 
 import './game.component.css';
 
