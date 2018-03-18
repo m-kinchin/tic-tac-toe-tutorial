@@ -32,17 +32,13 @@ export default class Game extends React.Component {
     const history = this.state.history.slice();
     let current = history[history.length - 1];
     let squares = current.squares.slice();
-
     if(current.win) {
       return;
     }
-
     if(squares[i].value) {
       return;
     }
-
     squares[i] = {value: current.xIsNext ? 'X' : 'O', className: "square"};
-    
     const line = this.checkWinLine(squares);
     const coll = (i + 1) % this.state.size;
     const row = Math.ceil((i + 1) / this.state.size);
@@ -62,13 +58,10 @@ export default class Game extends React.Component {
         squares[line[w]] = {value: squares[line[w]].value, className: "square-win"};
       }
     }
-
     history.push(newHistoryItem);
-
     let state = {
       history: history
     };
-    
     this.setState(state);
   }
 
@@ -99,7 +92,6 @@ export default class Game extends React.Component {
         winner: undefined
       }]
     });
-    
   }
 
   handleSizeValueChange(e) {
@@ -182,7 +174,6 @@ export default class Game extends React.Component {
         return winRoute;
       }
     }
-  
     return null;
   }
 
