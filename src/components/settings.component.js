@@ -12,6 +12,10 @@ export default class Settings extends React.Component {
             disabled={this.props.sizeFieldValue === this.props.size || !this.props.sizeFieldValue}>
             Set game size
           </button>
+          <button
+            onClick={() => this.props.onOrderDirectionChange()}>
+            Reorder
+          </button>
         </div>
     );
   }

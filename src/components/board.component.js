@@ -1,8 +1,10 @@
 import React from 'react';
 
+import './board.component.css'
 function Square(props) {
+  const className = true ? "square" : "square-win";
   return (
-    <button className="square" onClick={props.onClick}>
+    <button className={props.className} onClick={props.onClick}>
       {props.value}
     </button>
   );
@@ -12,7 +14,8 @@ export default class Board extends React.Component {
   renderSquare(i) {
     return <Square
       key={i}
-      value={this.props.squares[i]}
+      value={this.props.squares[i].value}
+      className={this.props.squares[i].className}
       onClick={() => this.props.onClick(i)}/>;
   }
 
