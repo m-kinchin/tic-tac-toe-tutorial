@@ -2,7 +2,6 @@ import React from 'react';
 
 import './board.component.css'
 function Square(props) {
-  const className = true ? "square" : "square-win";
   return (
     <button className={props.className} onClick={props.onClick}>
       {props.value}

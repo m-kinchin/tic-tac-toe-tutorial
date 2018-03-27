@@ -111,7 +111,7 @@ export default class Game extends React.Component {
     let firstItemId = 0;
     if(squares[firstItemId].value !== null) {
       winRoute[0] = firstItemId;
-      for (var i = 1; i < this.state.size; i++) {
+      for (let i = 1; i < this.state.size; i++) {
         const nextId = (this.state.size + 1) * i;
         if(squares[firstItemId].value !== squares[nextId].value || squares[nextId].value === null) {
           win = false;
@@ -129,7 +129,7 @@ export default class Game extends React.Component {
       firstItemId = this.state.size - 1;
       winRoute = Array(this.state.size).fill(0);
       winRoute[0] = firstItemId;
-      for (var i = 1; i < this.state.size; i++) {
+      for (let i = 1; i < this.state.size; i++) {
         const nextId = (this.state.size - 1) * (i + 1);
         if(squares[firstItemId].value !== squares[nextId].value || squares[nextId].value === null) {
           win = false;
@@ -142,12 +142,12 @@ export default class Game extends React.Component {
       }
     }
   
-    for (var i = 0; i < this.state.size; i++) {
+    for (let i = 0; i < this.state.size; i++) {
       win = true;
       firstItemId = i * this.state.size;
       winRoute = Array(this.state.size).fill(0);
       winRoute[0] = firstItemId;
-      for (var j = 1; j < this.state.size; j++) {
+      for (let j = 1; j < this.state.size; j++) {
         const nextId = i * this.state.size + j;
         if(squares[firstItemId].value !== squares[nextId].value || (squares[firstItemId].value === null || squares[nextId].value === null)) {
           win = false;
@@ -161,7 +161,7 @@ export default class Game extends React.Component {
       win = true;
       firstItemId = i;
       winRoute[0] = firstItemId;
-      for (var j = 1; j < this.state.size; j++) {
+      for (let j = 1; j < this.state.size; j++) {
         const nextId = i + j * this.state.size;
         if(squares[firstItemId].value !== squares[nextId].value || (squares[firstItemId].value === null || squares[nextId].value === null)) {
           win = false;
