@@ -27,7 +27,7 @@ export default class Game extends React.Component {
     };
   }
 
-  handleClick(i) {
+  handleClick = (i) => {
     const history = this.state.history.slice();
     let current = history[history.length - 1];
     let squares = current.squares.slice();
@@ -64,7 +64,7 @@ export default class Game extends React.Component {
     this.setState(state);
   }
 
-  jumpTo(i) {
+  jumpTo = (i) => {
     const history = this.state.history.slice(0, i + 1);
     this.setState({
       history: history,
@@ -81,7 +81,7 @@ export default class Game extends React.Component {
     }
   }
 
-  handleChangeSizeClick() {
+  handleChangeSizeClick = () => {
     this.setState({
       size: this.state.sizeFieldValue,
       history: [{
@@ -93,13 +93,13 @@ export default class Game extends React.Component {
     });
   }
 
-  handleSizeValueChange(e) {
+  handleSizeValueChange = (e) => {
     this.setState({
       sizeFieldValue: Number(e.target.value)
     });
   }
 
-  handleOrderDirectionChange() {
+  handleOrderDirectionChange = () => {
     this.setState({
       movesSortDesc: !this.state.movesSortDesc,
     });
@@ -177,9 +177,8 @@ export default class Game extends React.Component {
   }
 
   render() {
-    const history = this.state.history.slice();
-    let current = history[history.length - 1];
-    let squares = current.squares.slice();
+    let current = this.state.history[this.state.history.length - 1];
+    let squares = current.squares;
     let status = this.getStatus(current, this.state.size);
 
     return (
@@ -189,19 +188,19 @@ export default class Game extends React.Component {
             squares={squares}
             size={this.state.size}
             xIsNext={current.xIsNext}
-            onClick={(i) => this.handleClick(i)}/>
+            onClick={this.handleClick}/>
         </div>
         <div className="game-info">
           <div>{status}</div>
           <Settings
-            onSizeValueChange={(e) => this.handleSizeValueChange(e)}
-            onSizeButtonClick={() => this.handleChangeSizeClick()}
-            onOrderDirectionChange={() => this.handleOrderDirectionChange()}
+            onSizeValueChange={this.handleSizeValueChange}
+            onSizeButtonClick={this.handleChangeSizeClick}
+            onOrderDirectionChange={this.handleOrderDirectionChange}
             sizeFieldValue={this.state.sizeFieldValue}
             size={this.state.size}/>
           <MoveBoard
             history={this.state.history}
-            onClick={(i) => this.jumpTo(i)}
+            onClick={this.jumpTo}
             sortDesc={this.state.movesSortDesc}/>
         </div>
       </div>
