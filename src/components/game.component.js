@@ -1,10 +1,16 @@
 import React from 'react';
 
-import Board from './board.component'
-import MoveBoard from './move-board.component'
-import Settings from './settings.component'
+import Board from './board.component';
+import MoveBoard from './move-board.component';
+import Settings from './settings.component';
 
 import './game.component.css';
+
+function GameStatus(props) {
+  return (
+    <div>{props.status}</div>
+  )
+}
 
 export default class Game extends React.Component {
   constructor(props) {
@@ -176,6 +182,7 @@ export default class Game extends React.Component {
     return null;
   }
 
+  
   render() {
     let current = this.state.history[this.state.history.length - 1];
     let squares = current.squares;
@@ -183,25 +190,26 @@ export default class Game extends React.Component {
 
     return (
       <div className="game">
-        <div className="game-board">
           <Board
             squares={squares}
             size={this.state.size}
             xIsNext={current.xIsNext}
-            onClick={this.handleClick}/>
-        </div>
+            onClick={this.handleClick}
+          />
         <div className="game-info">
-          <div>{status}</div>
+          <GameStatus status={status}/>
           <Settings
             onSizeValueChange={this.handleSizeValueChange}
             onSizeButtonClick={this.handleChangeSizeClick}
             onOrderDirectionChange={this.handleOrderDirectionChange}
             sizeFieldValue={this.state.sizeFieldValue}
-            size={this.state.size}/>
+            size={this.state.size}
+          />
           <MoveBoard
             history={this.state.history}
             onClick={this.jumpTo}
-            sortDesc={this.state.movesSortDesc}/>
+            sortDesc={this.state.movesSortDesc}
+          />
         </div>
       </div>
     );
