@@ -34,6 +34,13 @@ function OrderDirectionTitle(props) {
 }
 
 export default class MoveBoard extends React.Component {
+  jumpTo = (i) => {
+    const history = this.state.history.slice(0, i + 1);
+    this.setState({
+      history: history,
+    });
+  }
+
   render() {
     const history = this.props.sortDesc ? this.props.history.reverse() : this.props.history;
     const orderDirectionTitle = "Moves is in " + (this.props.sortDesc ? "decending order." : "ascending order.");

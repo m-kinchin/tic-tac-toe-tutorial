@@ -11,6 +11,6 @@ ol, ul {
   margin-bottom: 10px;
 }
 
-.kbd-navigation .square:focus {
+.square:hover {
   background: #ddd;
 }

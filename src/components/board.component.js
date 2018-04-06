@@ -1,34 +1,35 @@
 import React from 'react';
 
+import BoardCell from './board-cell.component';
 import './board.component.css'
 
-function Square(props) {
+function Cell(props) {
   return (
-    <button className={props.className} onClick={() => props.onClick(props.id)}>
+    <div className={props.className} onClick={() => props.onClick(props.id)}>
       {props.value}
-    </button>
+    </div>
   );
 }
 
 export default class Board extends React.Component {
-  renderSquare(i) {
+  renderCell(i) {
     return (
-      <Square
+      <BoardCell
         key={i}
         id={i}
-        value={this.props.squares[i].value}
-        className={this.props.squares[i].className}
-        onClick={this.props.onClick}
+        value="x"
+        className="square"
       />
     );
   }
 
   render() {
     let rows = [];
-    for(let i = 0; i < this.props.size; i++) {
+    const size = 3;
+    for(let i = 0; i < size; i++) {
       let cells = [];
-      for(let j = 0; j < this.props.size; j++) {
-        cells.push(this.renderSquare(j + i * this.props.size));
+      for(let j = 0; j < size; j++) {
+        cells.push(this.renderCell(j + i * size * 1));
       }
       rows.push(
         <div key={i.toString()} className="board-row">
