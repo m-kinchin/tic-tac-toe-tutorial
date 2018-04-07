@@ -1,45 +1,25 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import BoardCell from './board-cell.component';
+
 import './board.component.css'
 
-function Cell(props) {
+const mapStateToProps = (state) => {
+  return {
+    size: state.size
+  };
+};
+
+function Board(props) {
+  const style = {gridTemplate: 'repeat(' + props.size + ', 34px) / repeat(' + props.size + ', 34px)'};
   return (
-    <div className={props.className} onClick={() => props.onClick(props.id)}>
-      {props.value}
+    <div className="game-board" style={style}>
+      {[...Array(Math.pow(props.size, 2))].map((e, i) => (
+        <BoardCell key={i} id={i} />
+      ))}
     </div>
   );
 }
 
-export default class Board extends React.Component {
-  renderCell(i) {
-    return (
-      <BoardCell
-        key={i}
-        id={i}
-        value="x"
-        className="square"
-      />
-    );
-  }
-
-  render() {
-    let rows = [];
-    const size = 3;
-    for(let i = 0; i < size; i++) {
-      let cells = [];
-      for(let j = 0; j < size; j++) {
-        cells.push(this.renderCell(j + i * size * 1));
-      }
-      rows.push(
-        <div key={i.toString()} className="board-row">
-          {cells}
-        </div>);
-    }
-    return (
-      <div className="game-board">
-        {rows}
-      </div>
-    );
-  }
-}
+export default connect(mapStateToProps, null)(Board);

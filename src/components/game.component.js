@@ -11,9 +11,11 @@ export default function Game() {
     return (
       <div className="game">
         <Board />
-        <GameStatus/>
-        {/* <Settings /> */}
-        {/* <MoveBoard /> */}
+        <div className="game-info">
+          <GameStatus/>
+          <Settings />
+          <MoveBoard />
+        </div>
       </div>
     );
 }

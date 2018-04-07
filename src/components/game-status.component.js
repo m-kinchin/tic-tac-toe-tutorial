@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import './game-status.component.css';
+
 const getStatus = (winner, totalCount, moveCount, xIsNext) => {
   if (winner) {
     return 'Winner: ' + winner;
@@ -13,7 +15,7 @@ const getStatus = (winner, totalCount, moveCount, xIsNext) => {
 
 function GameStatus(props) {
   return (
-    <div>{props.status}</div>
+    <div className="win-status">{props.status}</div>
   );
 }
 

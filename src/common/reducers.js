@@ -1,4 +1,13 @@
-import { combineReducers } from 'redux';
+import { 
+  SQUARE_CLICKED,
+  CHANGE_SIZE,
+  CHANGE_ORDER,
+  BACK_IN_HISTORY,
+  SQUARE_CLASS_NAME,
+  SQUARE_WIN_CLASS_NAME,
+  PREFILLED_STATE,
+  HISTORY_TEMPLATE
+} from '../common/consts';
 
 function squareClilck(state, action) {
   const len = state.history.length;
@@ -12,43 +21,44 @@ function squareClilck(state, action) {
     value :newHistoryItem.xIsNext ? 'X' : 'O',
     className: newHistoryItem.squares[action.id].className
   };
+
+  const coll = (action.id + 1) % state.size;
+  newHistoryItem.lastMoveCoord = {
+    coll: coll ? coll : state.size,
+    row: Math.ceil((action.id + 1) / state.size)
+  };
   newHistoryItem.xIsNext = !newHistoryItem.xIsNext;
+
   const winLine = checkWinLine(newHistoryItem.squares, state.size);
   if(winLine) {
-      newHistoryItem.winner = newHistoryItem.squares[action.id].value;
-      for(var w = 0; w < winLine.length; w++) {
-        newHistoryItem.squares[winLine[w]] = {value: newHistoryItem.squares[winLine[w]].value, className: "square-win"};
-      }
+    newHistoryItem.winner = newHistoryItem.squares[action.id].value;
+    for(var w = 0; w < winLine.length; w++) {
+      newHistoryItem.squares[winLine[w]] = {value: newHistoryItem.squares[winLine[w]].value, className: SQUARE_WIN_CLASS_NAME};
+    }
   }
+
   return {...newState, history: [...history, newHistoryItem]};
 }
 
-function setSettings(state = {
-  size: 3,
-  movesSortDesc: false,
-  history: [Array(9).fill({value: null, className: "square"})]
-}, action) {
+function setSettings(state, action) {
   switch (action.type) {
-    case 'CHANGE_SIZE':
-      state.size = action.size;
-      state.history = historyTemplate;
-      state.history[0].squares = Array(Math.pow(action.size, 2)).fill({value: null, className: "square"});
-      return state;
-    case 'CHANGE_ORDER':
-      state.movesSortDesc = !state.movesSortDesc;
+    case CHANGE_SIZE:
+      const newState = {...state};
+      newState.size = action.size;
+      newState.history = HISTORY_TEMPLATE.slice();
+      newState.history[0].squares = Array(Math.pow(action.size, 2)).fill({value: null, className: SQUARE_CLASS_NAME});
+      return newState;
+    case CHANGE_ORDER:
+      return {...state, movesSortDesc: !state.movesSortDesc};
     default:
       return state;
   }
 }
 
-function backInHistory(state = [Array(9).fill({value: null, className: "square"})], action) {
-  switch (action.type) {
-    case 'BACK_IN_HISTORY':
-      state = state.slice(0, action.moveNumber);
-      return state;
-    default:
-      return state;
-  }
+function backInHistory(state, action) {
+  const newState = {...state};
+  newState.history = newState.history.slice(0, action.movePlace + 1);
+  return newState;
 }
 
 function checkWinLine(squares, size) {
@@ -122,50 +132,19 @@ function checkWinLine(squares, size) {
   return null;
 }
 
-const historyTemplate = [{
-  xIsNext: true,
-  winner: undefined,
-  lastMoveCoord: {
-    coll: null,
-    row: null
-  },
-  moveCount: 0,
-}];
-
-const mainReducer = function(state = prefillState, action) {
+const mainReducer = function(state = PREFILLED_STATE, action) {
   switch (action.type) {
-    case 'BACK_IN_HISTORY':
+    case BACK_IN_HISTORY:
       return backInHistory(state, action);
-    case 'CHANGE_SIZE':
+    case CHANGE_SIZE:
       return setSettings(state, action);
-    case 'CHANGE_ORDER':
+    case CHANGE_ORDER:
       return setSettings(state, action);
-    case 'SQUARE_CLICKED':
-      return squareClilck(state, action);;
+    case SQUARE_CLICKED:
+      return squareClilck(state, action);
     default:
       return state;
   }
 }
-
-const prefillState = {
-  history: [{
-    squares: Array(9).fill({value: null, className: "square"}),
-    xIsNext: true,
-    winner: undefined,
-    lastMoveCoord: {
-      coll: null,
-      row: null
-    },
-    moveCount: 0,
-  }],
-  size: 3,
-  movesSortDesc: false
-};
-
-// const reducers = combineReducers({
-//   settings,
-//   backInHistory,
-//   squares
-// });
 
 export default mainReducer;

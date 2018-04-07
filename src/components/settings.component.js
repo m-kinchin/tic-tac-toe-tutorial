@@ -1,47 +1,47 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-export default class Settings extends React.Component {
+import { CHANGE_SIZE } from '../common/consts';
 
-  onSizeButtonClick = () => {
-    this.setState({
-      size: this.state.sizeFieldValue,
-      history: [{
-        boardState: Array(this.state.sizeFieldValue*this.state.sizeFieldValue).fill({value: null, className: "cell"}),
-        xIsNext: true,
-        win: false,
-        winner: undefined
-      }]
-    });
-  }
+import './settings.component.css';
 
-  onSizeValueChange = (e) => {
-    this.setState({
-      sizeFieldValue: Number(e.target.value)
-    });
-  }
-
-  onOrderDirectionChange = () => {
-    this.setState({
-      movesSortDesc: !this.state.movesSortDesc,
-    });
-  }
-
-  render() {
-      return (
-        <div className="game-settings">
-          <input 
-            value={this.props.sizeFieldValue}
-            onChange={(e) => this.onSizeValueChange(e)}/>
-          <button
-            onClick={() => this.onSizeButtonClick()}
-            disabled={this.props.sizeFieldValue === this.props.size || !this.props.sizeFieldValue}>
-            Set game size
-          </button>
-          <button
-            onClick={() => this.onOrderDirectionChange()}>
-            Reorder
-          </button>
-        </div>
-    );
-  }
+function Settings(props) {
+  let input;
+  let size = props.size;
+  return (
+    <div className="game-settings">
+      <input 
+        type="number"
+        min="2"
+        max="10"
+        step="1"
+        ref={node => {input = node;}}
+        defaultValue={props.size}
+      />
+      <button
+        onClick={() => props.onSizeChange(Number(input.value))}
+      >
+        Set game size
+      </button>
+    </div>
+  ); 
 }
+
+const mapStateToProps = (state) => {
+  return {
+    size: state.size
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSizeChange: (size) => {
+      dispatch({
+        type: CHANGE_SIZE,
+        size
+      });
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);
