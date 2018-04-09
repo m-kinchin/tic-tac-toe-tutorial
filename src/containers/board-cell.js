@@ -1,19 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { SQUARE_CLICKED } from '../common/consts';
+import BoardCell from '../components/board-cell';
+import { cellClick } from '../action/board';
 
-import './board-cell.component.css';
-
-function BoardCell(props) {
-  return (
-    <div className={props.className} onClick={() => props.onCellClick(props.id)}>
-      {props.value}
-    </div>
-  );
-}
+import '../styles/board-cell.css';
 
 const mapStateToProps = (state, ownProps) => {
+  debugger;
   const cell = state.history[state.history.length - 1].squares[ownProps.id];
   return {
     className: cell.className,
@@ -25,10 +19,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onCellClick: (id) => {
-      dispatch({
-        type: SQUARE_CLICKED,
-        id
-      });
+      dispatch(cellClick(id));
     }
   };
 };

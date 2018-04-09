@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
-import Game from './components/game.component';
-import mainReducer from './common/reducers';
+import Game from './components/game';
+import mainReducer from './reducers';
 
 import './index.css';
 

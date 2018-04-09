@@ -1,17 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-import BoardCell from './board-cell.component';
+import BoardCell from '../containers/board-cell';
 
-import './board.component.css'
+import '../styles/board.css'
 
-const mapStateToProps = (state) => {
-  return {
-    size: state.size
-  };
-};
-
-function Board(props) {
+const Board = (props) => {
   const style = {gridTemplate: 'repeat(' + props.size + ', 34px) / repeat(' + props.size + ', 34px)'};
   return (
     <div className="game-board" style={style}>
@@ -20,6 +13,6 @@ function Board(props) {
       ))}
     </div>
   );
-}
+};
 
-export default connect(mapStateToProps, null)(Board);
+export default Board;

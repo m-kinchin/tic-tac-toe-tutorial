@@ -7,7 +7,7 @@ import {
   SQUARE_WIN_CLASS_NAME,
   PREFILLED_STATE,
   HISTORY_TEMPLATE
-} from '../common/consts';
+} from './consts';
 
 function squareClilck(state, action) {
   const len = state.history.length;
@@ -36,8 +36,8 @@ function squareClilck(state, action) {
       newHistoryItem.squares[winLine[w]] = {value: newHistoryItem.squares[winLine[w]].value, className: SQUARE_WIN_CLASS_NAME};
     }
   }
-
-  return {...newState, history: [...history, newHistoryItem]};
+  newState.history = [...history, newHistoryItem];
+  return newState;
 }
 
 function setSettings(state, action) {
@@ -57,7 +57,7 @@ function setSettings(state, action) {
 
 function backInHistory(state, action) {
   const newState = {...state};
-  newState.history = newState.history.slice(0, action.movePlace + 1);
+  newState.history = newState.history.slice(0, action.moveIndex + 1);
   return newState;
 }
 
@@ -137,7 +137,6 @@ const mainReducer = function(state = PREFILLED_STATE, action) {
     case BACK_IN_HISTORY:
       return backInHistory(state, action);
     case CHANGE_SIZE:
-      return setSettings(state, action);
     case CHANGE_ORDER:
       return setSettings(state, action);
     case SQUARE_CLICKED:
